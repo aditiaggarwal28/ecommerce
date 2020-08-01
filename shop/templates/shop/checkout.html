@@ -1,0 +1,97 @@
+{% extends 'shop/basic.html' %}
+{% block title%} Checkout{% endblock %}
+{% block body%}
+<div class="container">
+    <h5>Items you ordered</h5>
+    <div class="rows">
+        <ul id="finalitems" class="list-group">
+        </ul>
+    </div>
+    <div>
+      <h5> The total amount you have to pay is:-<span id="pais">0</span>/-</h5>
+    </div>
+
+    <form action="/shop/checkout" method="POST">{% csrf_token %}
+      <div class="form-row">
+        <input type="hidden" name="json_order" id="json_order">
+        <input type="hidden" name="amount" id="amount">
+        <div class="form-group col-md-6">
+          <label for="first_name">First Name</label>
+          <input type="text" name="first_name" class="form-control" id="first_name">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="last_name">Last Name</label>
+          <input type="text" name="last_name" class="form-control" id="last_name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Address">Address</label>
+        <input type="text" name="Address" class="form-control" id="Address" placeholder="1234 Main St">
+      </div>
+      <div class="form-group">
+        <label for="Address_2">Address 2</label>
+        <input type="text" name="Address_2" class="form-control" id="Address_2" placeholder="Apartment, studio, or floor">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="city">City</label>
+          <input type="text" name="city" class="form-control" id="city">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="state">State</label>
+          <select id="state" name="state" class="form-control">
+            <option selected>Choose</option>
+            <option>Haryana</option>
+            <option>Punjab</option>
+            <option>chandigarh</option>
+            <option>UP</option>
+            <option>HP</option>
+            <option>Uttrakhand</option>
+            <option>Maharashtra</option>
+            <option>Rajasthan</option>
+          </select>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="zip">Zip</label>
+          <input type="text" name="zip" class="form-control" id="zip">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-check">
+          <input class="form-check-input" name="checkbox" type="checkbox" id="gridCheck">
+          <label class="form-check-label" for="gridCheck">
+            Agree to Terms and Conditions
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Place Order</button>
+    </form>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    cart=JSON.parse(localStorage.getItem('cart'));
+    var sum=0;
+    paisa=0;
+    for (var item in cart){
+    let name=cart[item][1];
+    let qty=cart[item][0];
+    let price=cart[item][2];
+    sum+=qty;
+    paisa+=price;
+    finalcart=`<li class='list-group-item' id='row"+item+"'>${name}<span class="badge badge-primary badge-pill"> ${qty}</span></li>`;
+    $('#finalitems').append(finalcart);
+    }
+document.getElementById('cart').innerHTML = sum;
+document.getElementById('pais').innerHTML = paisa;
+$('#amount').val($('#pais').html());
+$('#json_order').val(JSON.stringify(cart));
+{% if thank %}
+{
+alert('Your order is placed. Now you can track it using your order id-{{id}}');
+localStorage.clear();
+document.location="/shop/payment";
+}
+{% endif %}
+</script>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'shop/basic.html' %}
+{% block title%}Tracker-Track your Order here{% endblock %}
+{% block body%}
+<div class="container">
+    <br>
+    <h5>Track your order here!</h5>
+    <div class="rows">
+        <ul id="finalitems" class="list-group">
+        </ul>
+    </div>
+    <br>
+    <form action="#" method="get" id="trackerform">{% csrf_token %}
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="Order_id">Order id</label>
+          <input type="text" name="order_id" class="form-control" placeholder="Order id" id="order_id">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="first_name">First Name</label>
+          <input type="text" name="first_name" class="form-control" placeholder="First name" id="first_name">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Track Order</button>
+    </form>
+</div>
+<div class="container">
+    <br>
+    <h5>Here are your items status</h5>
+    <div class="rows">
+        <ul id="finaldesc" class="list-group">
+            <li>Your order is on the way.Right now due to some technical errors we can't track your order.Really sorry for the inconvenience.Please go back to some other page.</li>
+        </ul>
+    </div>
+{% endblock %}
+{% block js %}
+<script>
+    $('#trackerform').submit(function(event){
+    $('finaldesc').empty();
+    var formData={
+    'orderId': $('input[name=Order_id]').val(),
+    'first_name': $('input[name=first_name]').val(),
+    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+    };
+    $.ajax({
+        type:'POST',
+        url:'/shop/tracker',
+        data: formData,
+        encode: true
+        })
+
+    .done(function(data){
+    console.log(data)
+    });
+    event.preventDefault();
+    });
+</script>
+{% endblock %}

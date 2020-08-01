@@ -1,0 +1,28 @@
+{% extends 'shop/basic.html' %}
+
+{% block body %}
+   <div class="container mt-3">
+      <h1>Hello, world!</h1>
+
+    <div class="row mb-2">
+        {% for i in blog %}
+    <div class="col-md-6">
+      <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2 text-primary">{{i.title}}</strong>
+          <h3 class="mb-0">{{i.hdng0}}</h3>
+          <div class="mb-1 text-muted">{{i.pub_date}}</div>
+          <p class="card-text mb-auto">{{i.chdng0}}</p>
+          <a href="blogpost/{{i.post_id}}" class="stretched-link">Continue reading</a>
+        </div>
+        <div class="col-auto d-none d-lg-block">
+          <img  width="200" height="250" src="/media/{{i.thumbnail}}">
+        </div>
+      </div>
+    </div>
+   {% endfor %}
+    </div>
+
+   </div>
+
+{% endblock %}

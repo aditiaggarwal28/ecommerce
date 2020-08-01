@@ -1,0 +1,45 @@
+{% extends 'shop/basic.html' %}
+{% block title%}Contact Us{% endblock %}
+{% block style %}
+h1{
+text-align:center;
+margin-top:5px;
+}
+{% endblock %}
+{% block body%}
+<div class="container">
+    <h1>Contact Us</h1>
+    <form action="/shop/contact" method="POST">{% csrf_token %}
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Email address</label>
+            <input type="email" class="form-control" id="exampleFormControlInput1" name="email" placeholder="name@example.com">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Name</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" name='name' placeholder="Your name">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Phone Number</label>
+            <input type="number" class="form-control" id="form1GroupExampleInput" name="phone" placeholder="Your phone number">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">How may I help you?</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" name="desc" rows="3"></textarea>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-dark">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+{% if thank %}
+{
+alert('We registered your complaint and we will do the needful ASAP.');
+document.location="/shop/";
+}
+
+{% endif %}
+</script>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'shop/basic.html' %}
+{% block title%}Payement{% endblock %}
+{% block style %}
+.body{
+text-align:center;
+}
+{% endblock %}
+{% block body%}
+<div class="container">
+<h1>Payment Gateway</h1>
+<p>Do your payment here!</p>
+<img src="/media/{{pay.0.image}}" width="400px" height="400px" alt="">
+</div>
+{% endblock %}
